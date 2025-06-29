@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class Task4
+{
+    public void calc()
+    {
+        Scanner obj = new Scanner(System.in);
+
+        System.out.println("Enter the Value A:");
+        double a = obj.nextDouble();
+
+        System.out.println("Enter the Value B:");
+        double b = obj.nextDouble();
+
+        System.out.println("Operation");
+        System.out.println("a. add");
+        System.out.println("b. sub");
+        System.out.println("c. mul");
+        System.out.println("d. div");
+        System.out.println("e. mod");
+
+        System.out.println("Enter the option:");
+        char c = obj.next().charAt(0);
+
+        switch(c)
+        {
+            case 'a':
+                System.out.println("Addition: " + (a + b));
+                break;
+            case 'b':
+                System.out.println("Subtraction: " + (a - b));
+                break;
+            case 'c':
+                System.out.println("Multiplication: " + (a * b));
+                break;
+            case 'd':
+                System.out.println("Division: " + (a / b));
+                break;
+            case 'e':
+                System.out.println("Modulus: " + (a % b));
+                break;
+            default:
+                System.out.println("Invalid option");
+        }
+    }
+}
