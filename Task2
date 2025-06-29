@@ -1,0 +1,19 @@
+import java.util.Scanner;
+public class Task2 {
+    public static void main(String[] args) {
+        Scanner ab = new Scanner(System.in);
+        System.out.println("Enter the principal amount:");
+        double p = ab.nextDouble();
+        
+        System.out.println("Enter the no. of year:");
+        double n = ab.nextDouble();
+        
+        System.out.println("Enter the rate of interest:");
+        double r = ab.nextDouble();
+        
+        if (p > 0 && n > 0 && r > 0) {
+            double percent = (p * n * r) / 100;
+            System.out.println("Simple Interest percentage: " + percent);
+        }
+    }
+}
