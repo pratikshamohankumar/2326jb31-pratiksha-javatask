@@ -1,0 +1,59 @@
+class BankAccount {
+    private int balance = 1000;
+
+    public synchronized void deposit(int amount) {
+        balance += amount;
+        System.out.println("Deposited: " + amount + " | Balance: " + balance);
+    }
+
+    public synchronized void withdraw(int amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount + " | Balance: " + balance);
+        } else {
+            System.out.println("Insufficient balance for withdrawal.");
+        }
+    }
+
+    public synchronized void checkBalance() {
+        System.out.println("Current Balance: " + balance);
+    }
+}
+
+class Customer extends Thread {
+    BankAccount acc;
+    String action;
+    int amount;
+
+    Customer(BankAccount acc, String action, int amount) {
+        this.acc = acc;
+        this.action = action;
+        this.amount = amount;
+    }
+
+    public void run() {
+        switch (action) {
+            case "deposit":
+                acc.deposit(amount);
+                break;
+            case "withdraw":
+                acc.withdraw(amount);
+                break;
+            case "balance":
+                acc.checkBalance();
+                break;
+        }
+    }
+
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount();
+
+        Customer c1 = new Customer(acc, "deposit", 500);
+        Customer c2 = new Customer(acc, "withdraw", 300);
+        Customer c3 = new Customer(acc, "balance", 0);
+
+        c1.start();
+        c2.start();
+        c3.start();
+    }
+}
