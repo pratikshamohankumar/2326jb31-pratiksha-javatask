@@ -1,0 +1,21 @@
+class Task2 implements Runnable {
+    private String message;
+
+    public Task2(String message) {
+        this.message = message;
+    }
+
+    public void run() {
+        for (int i = 1; i <= 3; i++) {
+            System.out.println(message + " - " + i);
+        }
+    }
+
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new Task2("Hello"));
+        Thread t2 = new Thread(new Task2("Welcome"));
+
+        t1.start();
+        t2.start();
+    }
+}
