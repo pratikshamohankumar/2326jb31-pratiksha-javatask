@@ -1,0 +1,194 @@
+mysql> use fsd_tasks1;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_fsd_tasks1 |
++----------------------+
+| course               |
+| dept                 |
+| emp                  |
+| student              |
++----------------------+
+4 rows in set (0.12 sec)
+
+mysql> select * from course;
++-----+----------------------+-------+
+| cid | cname                | fee   |
++-----+----------------------+-------+
+| 101 | java programming     | 15000 |
+| 102 | web development      | 12000 |
+| 103 | javascript           | 10000 |
+| 104 | c programming        |  8000 |
+| 105 | software development |  7000 |
++-----+----------------------+-------+
+5 rows in set (0.02 sec)
+
+mysql> select * from student;
++-----+-----------+-------+-----------+
+| sid | name      | marks | course_id |
++-----+-----------+-------+-----------+
+|   1 | pratiksha |    75 |       101 |
+|   2 | john      |    90 |       102 |
+|   3 | shalini   |    90 |       103 |
+|   4 | rahul     |    85 |       101 |
+|   5 | monisha   |    65 |       104 |
++-----+-----------+-------+-----------+
+5 rows in set (0.01 sec)
+
+mysql> select * from student,count(s.sid)
+    -> from course c
+    -> join student s
+    -> where c.cido=s.course_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'count(s.sid)
+from course c
+join student s
+where c.cido=s.course_id' at line 1
+mysql> select c.cname,count(s.sid)
+    -> from course c join student s
+    -> where c.cid=s.course_id
+    -> group by c.cname;
++------------------+--------------+
+| cname            | count(s.sid) |
++------------------+--------------+
+| java programming |            2 |
+| web development  |            1 |
+| javascript       |            1 |
+| c programming    |            1 |
++------------------+--------------+
+4 rows in set (0.03 sec)
+
+mysql> select * dept;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dept' at line 1
+mysql> select * from dept;
++--------+------------+----------+
+| deptno | dname      | loc      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.02 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal     | comm    | deptno |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+14 rows in set (0.02 sec)
+
+mysql> select d.dname,count(e.sal)
+    -> from emp e join dept d
+    -> where e.deptno=d.deptno
+    -> group by d.dname;
++------------+--------------+
+| dname      | count(e.sal) |
++------------+--------------+
+| RESEARCH   |            5 |
+| SALES      |            6 |
+| ACCOUNTING |            3 |
++------------+--------------+
+3 rows in set (0.02 sec)
+
+mysql> select d.dname,
+    -> max(e.sal),min(e.sal)
+    -> from emp e join dept d
+    -> where e.deptno=d.deptno
+    -> group by d.dname;
++------------+------------+------------+
+| dname      | max(e.sal) | min(e.sal) |
++------------+------------+------------+
+| RESEARCH   |    3000.00 |     800.00 |
+| SALES      |    2850.00 |     950.00 |
+| ACCOUNTING |    5000.00 |    1300.00 |
++------------+------------+------------+
+3 rows in set (0.02 sec)
+
+mysql> select (ename,salary,salary*3) from emp;
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> select (ename,sal,sal*3) from emp;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select concat(ename,sal,sal*3) from emp;
++-------------------------+
+| concat(ename,sal,sal*3) |
++-------------------------+
+| SMITH800.002400.00      |
+| ALLEN1600.004800.00     |
+| WARD1250.003750.00      |
+| JONES2975.008925.00     |
+| MARTIN1250.003750.00    |
+| BLAKE2850.008550.00     |
+| CLARK2450.007350.00     |
+| SCOTT3000.009000.00     |
+| KING5000.0015000.00     |
+| TURNER1500.004500.00    |
+| ADAMS1100.003300.00     |
+| JAMES950.002850.00      |
+| FORD3000.009000.00      |
+| MILLER1300.003900.00    |
++-------------------------+
+14 rows in set (0.02 sec)
+
+mysql> select concat(ename, ' earns ' ,sal, ' monthly ' ,sal*3) from emp;
++---------------------------------------------------+
+| concat(ename, ' earns ' ,sal, ' monthly ' ,sal*3) |
++---------------------------------------------------+
+| SMITH earns 800.00 monthly 2400.00                |
+| ALLEN earns 1600.00 monthly 4800.00               |
+| WARD earns 1250.00 monthly 3750.00                |
+| JONES earns 2975.00 monthly 8925.00               |
+| MARTIN earns 1250.00 monthly 3750.00              |
+| BLAKE earns 2850.00 monthly 8550.00               |
+| CLARK earns 2450.00 monthly 7350.00               |
+| SCOTT earns 3000.00 monthly 9000.00               |
+| KING earns 5000.00 monthly 15000.00               |
+| TURNER earns 1500.00 monthly 4500.00              |
+| ADAMS earns 1100.00 monthly 3300.00               |
+| JAMES earns 950.00 monthly 2850.00                |
+| FORD earns 3000.00 monthly 9000.00                |
+| MILLER earns 1300.00 monthly 3900.00              |
++---------------------------------------------------+
+14 rows in set (0.01 sec)
+
+mysql> select d.dname,sum(e.sal) 
+    -> from emp e join dept d
+    -> where e.deptno=d.deptno
+    -> group by d.dname;
++------------+------------+
+| dname      | sum(e.sal) |
++------------+------------+
+| RESEARCH   |   10875.00 |
+| SALES      |    9400.00 |
+| ACCOUNTING |    8750.00 |
++------------+------------+
+3 rows in set (0.02 sec)
+
+mysql> select d.dname,sum(e.sal) 
+    -> from emp e join dept d
+    -> where e.deptno=d.deptno
+    -> group by d.dname
+    -> having sum(e.sal)>5000;
++------------+------------+
+| dname      | sum(e.sal) |
++------------+------------+
+| RESEARCH   |   10875.00 |
+| SALES      |    9400.00 |
+| ACCOUNTING |    8750.00 |
++------------+------------+
+3 rows in set (0.02 sec)
+
+mysql> notee;
