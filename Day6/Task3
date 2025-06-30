@@ -1,0 +1,20 @@
+class Task3 extends Thread {
+    public void run() {
+        try {
+            System.out.println(Thread.currentThread().getName() + " is running");
+            Thread.sleep(1000);
+            System.out.println(Thread.currentThread().getName() + " finished");
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Task3 t1 = new Task3();
+        Task3 t2 = new Task3();
+
+        t1.start();
+        t1.join();  // t2 will start only after t1 completes
+        t2.start();
+    }
+}
