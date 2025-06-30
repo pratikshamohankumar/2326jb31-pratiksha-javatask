@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class Task2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        HashSet<String> emails = new HashSet<>();
+
+        System.out.print("Enter number of email addresses: ");
+        int n = sc.nextInt();
+        sc.nextLine(); // consume newline
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter email: ");
+            emails.add(sc.nextLine());
+        }
+
+        System.out.println("\nUnique Email Addresses:");
+        for (String email : emails) {
+            System.out.println(email);
+        }
+        sc.close();
+    }
+}
