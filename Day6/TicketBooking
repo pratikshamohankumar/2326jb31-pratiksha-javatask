@@ -1,0 +1,33 @@
+class TicketBooking extends Thread {
+    static int availableTickets = 5;
+    int ticketsNeeded;
+
+    TicketBooking(int tickets) {
+        this.ticketsNeeded = tickets;
+    }
+
+    public void run() {
+        synchronized (TicketBooking.class) {
+            if (availableTickets >= ticketsNeeded) {
+                System.out.println(ticketsNeeded + " ticket(s) booked by " + Thread.currentThread().getName());
+                availableTickets -= ticketsNeeded;
+            } else {
+                System.out.println("Sorry, not enough tickets for " + Thread.currentThread().getName());
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        TicketBooking t1 = new TicketBooking(3);
+        TicketBooking t2 = new TicketBooking(2);
+        TicketBooking t3 = new TicketBooking(1);
+
+        t1.setName("User 1");
+        t2.setName("User 2");
+        t3.setName("User 3");
+
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
