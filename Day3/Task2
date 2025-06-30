@@ -1,0 +1,23 @@
+class Task2{
+    String name;
+    int age;
+}
+
+class Employee extends Task2 {
+    double salary, bonus;
+
+    public void calculateSalary() {
+        double totalSalary = salary + bonus;
+        System.out.println("Total Salary of " + name + ": " + totalSalary);
+    }
+
+    public static void main(String[] args) {
+        Employee emp = new Employee();
+        emp.name = "Pratiksha";
+        emp.age = 22;
+        emp.salary = 30000;
+        emp.bonus = 5000;
+
+        emp.calculateSalary();
+    }
+}
