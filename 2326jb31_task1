@@ -1,0 +1,212 @@
+mysql> create database fsd_tasks;
+ERROR 1007 (HY000): Can't create database 'fsd_tasks'; database exists
+mysql> create database fsd_tasks1;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use fsd_tasks1;
+Database changed
+mysql> create table student(
+    -> sid int primary key auto_increment,
+    -> name varchar(100) not null,
+    -> email varchar(100) unique,
+    -> dob date not null));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5
+mysql> create table student(
+    -> sid int primary key auto_increment,
+    -> name varchar(100) not null,
+    -> email varchar(100) unique,
+    -> dob date not null);
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> create table course(
+    -> cid int primary key auto_increment,
+    -> cname varchar(100) not null,
+    -> fee int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into student(name,email,dob) values('shalini','shalini34@gmail.com','2006-06-18');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into student(name,email,dob) values('monisha','monisha12@gmail.com','2005-05-15');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into course(cname,fee) values('java programming',15000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into course(cname,fee) values('web development',10000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from student;
++-----+---------+---------------------+------------+
+| sid | name    | email               | dob        |
++-----+---------+---------------------+------------+
+|   1 | shalini | shalini34@gmail.com | 2006-06-18 |
+|   2 | monisha | monisha12@gmail.com | 2005-05-15 |
++-----+---------+---------------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----+------------------+-------+
+| cid | cname            | fee   |
++-----+------------------+-------+
+|   1 | java programming | 15000 |
+|   2 | web development  | 10000 |
++-----+------------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> update course set fee=fee*1.12;
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from course;
++-----+------------------+-------+
+| cid | cname            | fee   |
++-----+------------------+-------+
+|   1 | java programming | 16800 |
+|   2 | web development  | 11200 |
++-----+------------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create database library_DB1;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use library_DB1;
+Database changed
+mysql> create table author(
+    -> id int primary key,
+    -> name varchar(100) not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table book(
+    -> bookid int primary key,
+    -> title varchar(150) not null,
+    -> author_id int,
+    -> foreign key(author_id) references author(id));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table member(
+    -> id int primary key,
+    -> name varchar(100) not null,
+    -> membership_date date);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into author values(23,'santhiya');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into author values(45,'suganya');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into book values(123,'the bird',23);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into book values(456,'the old lady',45);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into member values(3456,'shalini','2025-06-25');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into member values(7643,'monisha','2025-06-30');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from author;
++----+----------+
+| id | name     |
++----+----------+
+| 23 | santhiya |
+| 45 | suganya  |
++----+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from book;
++--------+--------------+-----------+
+| bookid | title        | author_id |
++--------+--------------+-----------+
+|    123 | the bird     |        23 |
+|    456 | the old lady |        45 |
++--------+--------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from member;
++------+---------+-----------------+
+| id   | name    | membership_date |
++------+---------+-----------------+
+| 3456 | shalini | 2025-06-25      |
+| 7643 | monisha | 2025-06-30      |
++------+---------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> create table department(
+    -> did int primary key,
+    -> dept_name varchar(50) not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table employee(
+    -> eid int primary key auto_increment,
+    -> name varchar(100) not null,
+    -> salary int not null,
+    -> dept_id int,
+    -> foreign key(dept_id) references department(did);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 6
+mysql> create table employee(
+    -> eid int primary key auto_increment,
+    -> name varchar(100) not null,
+    -> salary int not null,
+    -> dept_id int,
+    -> foreign key(dept_id) references department(did));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into department values(23,'B.SC IT');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into department values(34,'B.SC CT');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into department values(54,'B.SC CS');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into department values(42,'B.COM');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into department values(67,'BCA');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee(name,salary,dept_id) values('pratiksha',15000,23);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee(name,salary,dept_id) values('shailini',12000,34);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee(name,salary,dept_id) values('raji',14000,54);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee(name,salary,dept_id) values('bhuvana',10000,42);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee(name,salary,dept_id) values('monisha',16000,67);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from department;
++-----+-----------+
+| did | dept_name |
++-----+-----------+
+|  23 | B.SC IT   |
+|  34 | B.SC CT   |
+|  42 | B.COM     |
+|  54 | B.SC CS   |
+|  67 | BCA       |
++-----+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-----+-----------+--------+---------+
+| eid | name      | salary | dept_id |
++-----+-----------+--------+---------+
+|   1 | pratiksha |  15000 |      23 |
+|   2 | shailini  |  12000 |      34 |
+|   3 | raji      |  14000 |      54 |
+|   4 | bhuvana   |  10000 |      42 |
+|   5 | monisha   |  16000 |      67 |
++-----+-----------+--------+---------+
+5 rows in set (0.00 sec)
+
+mysql> notee;
