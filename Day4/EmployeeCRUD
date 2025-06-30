@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+public class EmployeeCRUD {
+    static String filePath = "employees.txt";
+
+    public static void addEmployee(String empData) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
+        writer.write(empData);
+        writer.newLine();
+        writer.close();
+        System.out.println("Employee added.");
+    }
+
+    public static void displayEmployees() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+
+        System.out.println("--- Employee Records ---");
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+        reader.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("\n1. Add Employee\n2. View Employees\n3. Exit");
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Employee Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter Employee ID: ");
+                    String id = sc.nextLine();
+                    System.out.print("Enter Department: ");
+                    String dept = sc.nextLine();
+
+                    addEmployee(id + "," + name + "," + dept);
+                    break;
+
+                case 2:
+                    displayEmployees();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting...");
+                    return;
+
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+}
