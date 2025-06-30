@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+
+class Library {
+    ArrayList<String> books = new ArrayList<>();
+
+    public void addBook(String book) {
+        books.add(book);
+        System.out.println(book + " added.");
+    }
+
+    public void removeBook(String book) {
+        if (books.remove(book)) {
+            System.out.println(book + " removed.");
+        } else {
+            System.out.println(book + " not found.");
+        }
+    }
+
+    public void issueBook(String book) {
+        if (books.contains(book)) {
+            System.out.println(book + " issued.");
+            books.remove(book);
+        } else {
+            System.out.println(book + " not available.");
+        }
+    }
+
+    public void displayBooks() {
+        System.out.println("Available books: " + books);
+    }
+
+    public static void main(String[] args) {
+        Library lib = new Library();
+        lib.addBook("Java Basics");
+        lib.addBook("OOP in Java");
+        lib.displayBooks();
+        lib.issueBook("Java Basics");
+        lib.removeBook("OOP in Java");
+        lib.displayBooks();
+    }
+}
