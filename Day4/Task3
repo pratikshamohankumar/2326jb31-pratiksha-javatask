@@ -1,0 +1,18 @@
+import java.io.*;
+
+public class Task3{
+    public static void main(String[] args) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
+            writer.write("Line 1: Hello, world!");
+            writer.newLine();
+            writer.write("Line 2: Welcome to Java File Handling.");
+            writer.newLine();
+
+            writer.close();
+            System.out.println("Successfully written to the file.");
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+}
