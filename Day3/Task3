@@ -1,0 +1,15 @@
+public class Task3 {
+    public int sum(int a, int b) {
+        return a + b;
+    }
+
+    public double sum(double a, double b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        Task3 obj = new OverloadingExample();
+        System.out.println("Sum of ints: " + obj.sum(5, 10));
+        System.out.println("Sum of doubles: " + obj.sum(5.5, 10.2));
+    }
+}
